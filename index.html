@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI calculator</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(120deg, rgb(26, 26, 79), rgba(0, 0, 255, 0.349));
+        }
+        #container{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            height: 400px;
+            background-color: rgb(205, 202, 202);
+            width: 360px;
+        }
+        #weight,#height{
+            margin: 10px 20px;
+            font-size: 19px;
+            font-weight: 800;
+        }
+        input{
+            border: none;
+            outline: none;
+            padding: 1px;
+            width: 100px;
+        }
+        #btn{
+            background-color: rgb(0, 195, 255);
+            outline: none;
+            border: none;
+            padding: 8px 18px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            display: block;
+            margin:  30px auto 10px;
+        }
+        #instruction{
+            margin: 20px 20px;
+        }
+        #result, #output{
+            font-size: 25px;
+            color: white;
+            margin: 10px 20px;
+        }
+        ul{
+            list-style: none;
+        }
+        li{
+            margin-top: 10px;
+            font-weight: 800;
+            color: rgb(102, 82, 75);
+        }
+        #pop-up{
+            display: none;
+            border-radius: 10px;
+            position: absolute;
+            z-index: 99;
+            background-color: rgb(172, 172, 118);
+            width: 80%;
+            height: 60%;
+            top: 0;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            text-align: center;
+        }
+        #close{
+            display: block;
+            outline: none;
+            border: none;
+            font-size: 20px;
+            margin: auto;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 60px;
+            background-color: red;
+            color: white;
+        }
+        #result{
+            margin-top: 40px;
+            color: blue;
+            font-size: 18px;
+        }
+        #output{
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="main">
+            <div id="weight">
+                <label for="weight">Enter weight in KGs</label>
+                <input type="number" name="weight" id="weight" min="1">
+            </div>
+            <div id="height">
+                <label for="height">Enter height in CMs</label>
+                <input type="number" name="height" id="height" min="1">
+            </div>
+            <button id="btn">Calculate</button>
+            <div id="instruction">
+                <h2>Instructions</h2>
+                <ul>
+                    <li>If BMI <= 18.4 then Underweight</li>
+                    <li>If BMI >= 18.5 and BMI <= 24.9 then Normal</li>
+                    <li>If BMI >= 25.0 and BMI <= 39.9 then Overweight</li>
+                    <li>If BMI >= 40.0 then Obese</li>
+                </ul>
+            </div>
+        </div>
+        <div id="pop-up">
+            <div id="result"></div>
+            <div id="output"></div>
+            <button id="close">Close</button>
+        </div>
+    </div>
+    <script>
+        const weightValue = document.querySelector("#weight input")
+        const heightValue = document.querySelector("#height input")
+        const btn = document.getElementById("btn")
+        const result = document.getElementById("result")
+        const output = document.getElementById("output")
+        const popup = document.getElementById("pop-up")
+        const close = document.getElementById("close")
+        const backgroundText = document.getElementById("main")
+
+        close.addEventListener("click",()=>{
+            popup.style.display = "none"
+            backgroundText.style.filter = "blur(0px)"
+        })
+
+        btn.addEventListener("click",()=>{
+            const weight = weightValue.value
+            const height = heightValue.value
+            
+            if(weight == ""){
+                alert("Fill the Weight!!!")
+            }
+            else if(height == ""){
+                alert("Fill the height!!")
+            }
+            else{
+                backgroundText.style.filter = "blur(20px)"
+                popup.style.display = "block"
+                const BMI = weight/(height*height)*10000
+
+                if(BMI <=18.4){
+                    output.innerText = `You're Underweight.`
+                    output.style.color = "lightgreen"
+                }
+                else if(BMI >=18.5 && BMI <= 24.9){
+                    output.innerText = `You're Normal.`
+                    output.style.color = "green"
+                }
+                else if(BMI >= 25.0 && BMI <=39.9){
+                    output.innerText = `You're Overweight.`
+                    output.style.color = "red"
+                }
+                else{
+                    output.innerText = `You're Obese.`
+                    output.style.color = "brown"
+                }
+                result.innerText = `Your BMI value is ${BMI.toFixed(2)}`
+            }
+        })
+    </script>
+</body>
+</html>
